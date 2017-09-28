@@ -2,7 +2,14 @@
 
 Implementation of Boolang - Boolean Logic Language
 
-Boolang is a simple language that consumes array of pre-defined variables, and returns boolean value if constraints on these variables are met.
+Boolang is a simple language that consumes array of pre-defined variables, and
+returns boolean value if constraints on these variables are met.
+
+## Features
+
+1. Case in-sensitive variable names and keywords
+
+TODO: list features
 
 ## BNF Grammar
 
@@ -14,9 +21,12 @@ simple_expr : term (AND term)*
 term : constraint
      | LPAREN expr RPAREN
 
-constraint : variable relational_operator string_expr
+constraint : variable relational_operator value
 
-string_expr: STRING
+value : INTEGER
+      | FLOAT
+      | STRING
+      | BOOL
 
 variable: ID
 

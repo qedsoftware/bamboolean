@@ -1,0 +1,3 @@
+
+class LexerError(Exception):
+    pass
