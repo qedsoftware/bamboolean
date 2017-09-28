@@ -36,14 +36,14 @@ class LexerTestCase(unittest.TestCase):
     def test_lexer(self):
         lexer = Lexer(simple_example)
         token = lexer.get_next_token()
-        tokens = []
+        tokens = [token]
 
         while token.type != tok.EOF:
-            tokens.append(token)
             token = lexer.get_next_token()
+            tokens.append(token)
 
         self.assertEqual(list(map(lambda t: t.type, tokens)), [
             tok.ID, tok.GT, tok.INTEGER, tok.AND,
             tok.ID, tok.NE, tok.BOOL, tok.OR,
-            tok.ID, tok.EQ, tok.STRING,
+            tok.ID, tok.EQ, tok.STRING, tok.EOF,
         ])

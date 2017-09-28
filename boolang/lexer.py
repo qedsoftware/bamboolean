@@ -14,6 +14,12 @@ class Token:
             type=self.type,
             value=repr(self.value))
 
+    def __repr__(self):
+        return self.__str__()
+
+    def tree_repr(self):
+        return (self.type, self.value)
+
 
 RESERVED_KEYWORDS = {
     'AND': Token(tok.AND, 'AND'),

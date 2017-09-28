@@ -10,6 +10,7 @@ returns boolean value if constraints on these variables are met.
 1. Case in-sensitive variable names and keywords
 
 TODO: list features
+TODO: describe operators associativity and precedence
 
 ## BNF Grammar
 
