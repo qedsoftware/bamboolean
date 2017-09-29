@@ -34,25 +34,21 @@ class Parser:
         """
         expr: simple_expr (OR simple_expr)*
         """
-        node = self.simple_expr()
-
-        while self.current_token.type == tok.OR:
-            token = self.current_token
-            self.consume(tok.OR)
-            node = ast.BinOp(left=node, op=token, right=self.simple_expr())
-
-        return node
+        return self._parse_bin_op(self.simple_expr, tok.OR)
 
     def simple_expr(self):
         """
         simple_expr: term (AND term)*
         """
-        node = self.term()
+        return self._parse_bin_op(self.term, tok.AND)
 
-        while self.current_token.type == tok.AND:
+    def _parse_bin_op(self, node_func, token_type):
+        node = self.node_func()
+
+        while self.current_token.type == token_type:
             token = self.current_token
-            self.consume(tok.AND)
-            node = ast.BinOp(left=node, op=token, right=self.term())
+            self.consume(token_type)
+            node = ast.BinOp(left=node, op=token, right=self.node_func())
 
         return node
 
@@ -92,18 +88,14 @@ class Parser:
         value : INTEGER | FLOAT | STRING | BOOL
         """
         token = self.current_token
-
-        if token.type in [tok.INTEGER, tok.FLOAT]:
-            self.consume(token.type)
-            return ast.Num(token)
-
-        elif token.type == tok.STRING:
-            self.consume(tok.STRING)
-            return ast.String(token)
-
-        elif token.type == tok.BOOL:
-            self.consume(tok.BOOL)
-            return ast.Bool(token)
-
-        else:
+        ast_mapping = {
+            'INTEGER': ast.Num,
+            'FLOAT': ast.Num,
+            'STRING': ast.String,
+            'BOOL': ast.Bool,
+        }
+        try:
+            ast_class = ast_mapping[token.type]
+            return ast_class(token)
+        except KeyError:
             self.error("Invalid constraint value")

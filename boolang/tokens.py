@@ -1,4 +1,3 @@
-
 # Types
 STRING = 'STRING'
 BOOL = 'BOOL'
