@@ -149,6 +149,7 @@ class Lexer:
                 # GTE, GT
                 self.next()
                 if self.current_char is '=':
+                    self.next()
                     return Token(tok.GTE, '>=')
                 else:
                     return Token(tok.GT, '>')

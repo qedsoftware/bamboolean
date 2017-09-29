@@ -43,12 +43,12 @@ class Parser:
         return self._parse_bin_op(self.term, tok.AND)
 
     def _parse_bin_op(self, node_func, token_type):
-        node = self.node_func()
+        node = node_func()
 
         while self.current_token.type == token_type:
             token = self.current_token
             self.consume(token_type)
-            node = ast.BinOp(left=node, op=token, right=self.node_func())
+            node = ast.BinOp(left=node, op=token, right=node_func())
 
         return node
 
@@ -96,6 +96,7 @@ class Parser:
         }
         try:
             ast_class = ast_mapping[token.type]
+            self.consume(token.type)
             return ast_class(token)
         except KeyError:
             self.error("Invalid constraint value")

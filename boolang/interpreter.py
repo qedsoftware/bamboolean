@@ -12,9 +12,7 @@ class Interpreter(NodeVisitor):
         self.symbol_table = symbol_table
 
     def interpret(self):
-        if self.tree is None:
-            return ''
-        return self.visit(self.tree)
+        return self.visit(self.tree) if self.tree else False
 
     def visit_Constraint(self, node):
         var_value = self.visit(node.var)

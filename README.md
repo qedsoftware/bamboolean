@@ -12,6 +12,12 @@ returns boolean value if constraints on these variables are met.
 TODO: list features
 TODO: describe operators associativity and precedence
 
+## Testing
+
+Run tests:
+
+`python -m unittest discover boolang/`
+
 ## BNF Grammar
 
 ```
