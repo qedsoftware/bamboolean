@@ -45,6 +45,6 @@ class ParserTestCase(unittest.TestCase):
             [
              [(tok.ID, 'X'), (tok.GT, '>'), (tok.INTEGER, 10)],
              (tok.AND, 'AND'),
-             [(tok.ID, 'Y'), (tok.EQ, '=='), (tok.STRING, 'yes')],
+             [(tok.ID, 'Y'), (tok.EQ, '=='), (tok.STRING, 'eligible')],
             ],
         ])

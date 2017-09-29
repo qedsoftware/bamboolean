@@ -21,16 +21,16 @@ class TokenBasedAST(AST):
 
 
 class Constraint(AST):
-    def __init__(self, var, rel_op, val):
+    def __init__(self, var, rel_op, value):
         self.var = var
         self.rel_op = rel_op
-        self.val = val
+        self.value = value
 
     def tree_repr(self):
         return [
             self.var.tree_repr(),
             self.rel_op.tree_repr(),
-            self.val.tree_repr(),
+            self.value.tree_repr(),
         ]
 
 

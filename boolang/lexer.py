@@ -88,14 +88,6 @@ class Lexer:
         self.next()  # omit closing quote
         return Token(tok.STRING, result)
 
-    def _integer(self):
-        result = ''
-        while self.current_char is not None and \
-                self.current_char.isdigit():
-            result += self.current_char
-            self.next()
-        return int(result)
-
     def number(self):
         result = str(self._integer())
         if self.current_char == '.':
@@ -104,6 +96,14 @@ class Lexer:
             return Token(tok.FLOAT, float(result))
         else:
             return Token(tok.INTEGER, int(result))
+
+    def _integer(self):
+        result = ''
+        while self.current_char is not None and \
+                self.current_char.isdigit():
+            result += self.current_char
+            self.next()
+        return int(result)
 
     def get_next_token(self):
         """
