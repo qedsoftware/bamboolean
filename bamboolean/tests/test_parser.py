@@ -1,7 +1,7 @@
 import unittest
 
-from boolang import tokens as tok
-from boolang.factories import ParserFactory
+from bamboolean import tokens as tok
+from bamboolean.factories import ParserFactory
 from . import fixtures
 
 

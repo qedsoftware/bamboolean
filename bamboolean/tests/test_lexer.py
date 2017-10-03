@@ -1,7 +1,7 @@
 import unittest
 
-from boolang.lexer import Lexer
-from boolang import tokens as tok
+from bamboolean.lexer import Lexer
+from bamboolean import tokens as tok
 from .fixtures import simple_example
 
 

@@ -1,6 +1,6 @@
 import unittest
 
-from boolang.factories import InterpreterFactory
+from bamboolean.factories import InterpreterFactory
 from . import fixtures
 
 

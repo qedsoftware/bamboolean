@@ -1,8 +1,8 @@
-# Boolang interpreter
+# Bamboolean interpreter
 
-Implementation of Boolang - Boolean Logic Language
+Implementation of Bamboolean - Boolean Logic Language
 
-Boolang is a simple language that consumes array of pre-defined variables, and
+Bamboolean is a simple language that consumes array of pre-defined variables, and
 returns boolean value if constraints on these variables are met.
 
 ## Features
@@ -16,7 +16,7 @@ TODO: describe operators associativity and precedence
 
 Run tests:
 
-`python -m unittest discover boolang/`
+`python -m unittest discover bamboolean/`
 
 ## BNF Grammar
 
