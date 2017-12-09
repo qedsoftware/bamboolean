@@ -1,6 +1,7 @@
 import unittest
 
 from bamboolean import tokens as tok
+from bamboolean.exceptions import BambooleanParserError
 from bamboolean.factories import ParserFactory
 from . import fixtures
 
@@ -48,3 +49,8 @@ class ParserTestCase(unittest.TestCase):
              [(tok.ID, 'Y'), (tok.EQ, '=='), (tok.STRING, 'eligible')],
             ],
         ])
+
+    def test_parser_raises_on_invalid_ast(self):
+        parser = ParserFactory("x >>= f")
+        with self.assertRaises(BambooleanParserError):
+            parser.parse()
