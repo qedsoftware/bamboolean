@@ -1,3 +1,4 @@
+from .exceptions import BambooleanParserError
 from . import ast
 from . import tokens as tok
 
@@ -14,7 +15,7 @@ class Parser:
         return node
 
     def error(self, extra=''):
-        raise SyntaxError(
+        raise BambooleanParserError(
             'Invalid syntax on: token {type}, val {val}. {extra}'.format(
                 type=self.current_token.type,
                 val=self.current_token.value,

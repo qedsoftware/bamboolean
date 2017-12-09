@@ -1,6 +1,7 @@
 import unittest
 
 from bamboolean.lexer import Lexer
+from bamboolean.exceptions import BambooleanLexerError
 from bamboolean import tokens as tok
 from .fixtures import simple_example
 
@@ -47,3 +48,8 @@ class LexerTestCase(unittest.TestCase):
             tok.ID, tok.NE, tok.BOOL, tok.OR,
             tok.ID, tok.EQ, tok.STRING, tok.EOF,
         ])
+
+    def test_lexer_raises_on_invalid_token(self):
+        lexer = Lexer('@>>')
+        with self.assertRaises(BambooleanLexerError):
+            lexer.get_next_token()

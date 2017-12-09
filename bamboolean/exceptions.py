@@ -1,7 +1,14 @@
-
-class NoSuchVisitorException(Exception):
+class BambooleanError(Exception):
     pass
 
 
-class LexerError(Exception):
+class BambooleanLexerError(BambooleanError):
+    pass
+
+
+class BambooleanParserError(BambooleanError):
+    pass
+
+
+class NoSuchVisitorException(BambooleanError):
     pass

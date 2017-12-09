@@ -1,6 +1,6 @@
 import re
 
-from .exceptions import LexerError
+from .exceptions import BambooleanLexerError
 from . import tokens as tok
 
 
@@ -36,8 +36,8 @@ class Lexer:
         self.current_char = self.text[self.position]
 
     def error(self):
-        raise LexerError(
-            """Error tokenizing input on character: {} and {} position
+        raise BambooleanLexerError(
+            """Error tokenizing input on character: {} and position: {}
             """.format(self.current_char, self.position)
         )
 
