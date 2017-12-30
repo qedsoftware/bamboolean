@@ -12,11 +12,18 @@ class InterpreterTestCase(unittest.TestCase):
 
     def test_interpreter(self):
         sym_tab = {
-            'x': 100,
-            'y': False,
-            'z': 'yes',
+            'x': [100, 90, 43, 42],
+            'y': [False, True, False, False],
+            'z': ['no', 'yes__typo', 'no', 'yes'],
+            'results': [True, False, True, True],
         }
-        self.assertTrue(interpret(fixtures.simple_example, sym_tab))
+        self.assertEqual(
+            list(map((lambda args: interpret(
+                fixtures.simple_example,
+                {'x': args[0], 'y': args[1], 'z': args[2]})
+            ), zip(sym_tab['x'], sym_tab['y'], sym_tab['z']))),
+            sym_tab['results'],
+        )
 
     def test_parentheses(self):
         sym_tab = {
