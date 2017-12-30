@@ -16,3 +16,7 @@ def InterpreterFactory(text, symbol_table):
 
 def interpret(text, symbol_table):
     return InterpreterFactory(text, symbol_table).interpret()
+
+
+def parse(text):
+    return ParserFactory(text).parse()

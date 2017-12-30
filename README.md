@@ -5,18 +5,21 @@ Implementation of Bamboolean - Boolean Logic Language
 Bamboolean is a simple language that consumes array of pre-defined variables, and
 returns boolean value if constraints on these variables are met.
 
+Supported from Python >= 3.4
+
 ## Features
 
 1. Case in-sensitive variable names and keywords
 
-TODO: list features
-TODO: describe operators associativity and precedence
+    TODO: list features
+
+    TODO: describe operators associativity and precedence
 
 ## Testing
 
 Run tests:
 
-`python -m unittest discover bamboolean/`
+    `python run_tests.py`
 
 ## BNF Grammar
 
