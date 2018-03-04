@@ -1,4 +1,6 @@
 import re
+from functools import reduce
+from collections import OrderedDict
 
 from .exceptions import BambooleanLexerError
 from . import tokens as tok
@@ -18,7 +20,7 @@ class Token:
         return self.__str__()
 
     def tree_repr(self):
-        return (self.type, self.value)
+        return self.type, self.value
 
 
 RESERVED_KEYWORDS = {
@@ -81,6 +83,7 @@ class Lexer:
         return char == "'" or char == '"'
 
     def string(self):
+        self.next()  # skip opening quotation mark
         result = ''
         while not self._is_quotation_mark(self.current_char):
             result += self.current_char
@@ -105,64 +108,51 @@ class Lexer:
             self.next()
         return int(result)
 
+    def skip_n_chars(self, n):
+        for i in range(n):
+            self.next()
+
+    def is_token_equal(self, expected):
+        return expected == reduce(
+            lambda actual, _: actual + str(self.peek()),
+            range(len(expected)-1),
+            self.current_char,
+        )
+
     def get_next_token(self):
         """
-        Lexical anaylzer (tokenizer). Breaks sentence apart into tokens
+        Lexical analyzer (tokenizer). Breaks sentence apart into tokens
         """
+        regex_map = OrderedDict((
+            (r'("|\')', self.string),
+            (r'[_a-zA-Z]', self.id),
+            (r'\d', self.number),
+        ))
+
+        tokens_map = OrderedDict((
+            ('==', Token(tok.EQ, '==')),
+            ('!=', Token(tok.NE, '!=')),
+            ('<=', Token(tok.LTE, '<=')),
+            ('>=', Token(tok.GTE, '>=')),
+            ('>', Token(tok.GT, '>')),
+            ('<', Token(tok.LT, '<')),
+            ('(', Token(tok.LPAREN, '(')),
+            (')', Token(tok.RPAREN, ')')),
+        ))
+
         while self.current_char is not None:
             if self.current_char.isspace():
                 self.skip_whitespace()
                 continue
 
-            if re.match('[_a-zA-Z]', self.current_char):
-                return self.id()
+            for regex, func in regex_map.items():
+                if re.match(regex, self.current_char):
+                    return func()
 
-            if self._is_quotation_mark(self.current_char):
-                self.next()
-                return self.string()
-
-            if self.current_char.isdigit():
-                return self.number()
-
-            # Relational operators
-
-            if self.current_char is '=' and self.peek() == '=':
-                self.next()
-                self.next()
-                return Token(tok.EQ, '==')
-
-            if self.current_char is '!' and self.peek() == '=':
-                self.next()
-                self.next()
-                return Token(tok.NE, '!=')
-
-            if self.current_char is '<':
-                # LTE, LT
-                self.next()
-                if self.current_char is '=':
-                    self.next()
-                    return Token(tok.LTE, '<=')
-                else:
-                    return Token(tok.LT, '<')
-
-            if self.current_char is '>':
-                # GTE, GT
-                self.next()
-                if self.current_char is '=':
-                    self.next()
-                    return Token(tok.GTE, '>=')
-                else:
-                    return Token(tok.GT, '>')
-
-            # Parentheses
-
-            if self.current_char == '(':
-                self.next()
-                return Token(tok.LPAREN, '(')
-
-            if self.current_char == ')':
-                self.next()
-                return Token(tok.RPAREN, ')')
+            for expected_val, token in tokens_map.items():
+                if self.is_token_equal(expected_val):
+                    self.skip_n_chars(len(expected_val))
+                    return token
 
             self.error()
 
