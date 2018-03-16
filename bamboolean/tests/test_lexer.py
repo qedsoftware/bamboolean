@@ -19,6 +19,7 @@ class LexerTestCase(unittest.TestCase):
             (')', tok.RPAREN, ')'),
             ('var', tok.ID, 'VAR'),
             ('another_var_1', tok.ID, 'ANOTHER_VAR_1'),
+            ('group/variable_name', tok.ID, 'GROUP/VARIABLE_NAME'),
             ("'text'", tok.STRING, 'text'),
             ('"text"', tok.STRING, 'text'),
             ('"it_is_still_string"', tok.STRING, 'it_is_still_string'),

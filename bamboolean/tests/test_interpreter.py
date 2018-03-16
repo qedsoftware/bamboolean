@@ -43,4 +43,3 @@ class InterpreterTestCase(unittest.TestCase):
             'y': 'not eligible',
         }
         self.assertTrue(interpret(fixtures.operators_precedence, sym_tab))
-

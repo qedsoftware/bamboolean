@@ -67,7 +67,7 @@ class Lexer:
         """
         result = ''
         while self.current_char is not None and \
-                re.match('\w', self.current_char):
+                re.match(r'[\w/]', self.current_char):
             result += self.current_char
             self.next()
         result = result.upper()
