@@ -21,6 +21,8 @@ class LexerTestCase(unittest.TestCase):
             ('another_var_1', tok.ID, 'ANOTHER_VAR_1'),
             ("'text'", tok.STRING, 'text'),
             ('"text"', tok.STRING, 'text'),
+            ('"it_is_still_string"', tok.STRING, 'it_is_still_string'),
+            ('"this/also/works"', tok.STRING, 'this/also/works'),
             ('>', tok.GT, '>'),
             ('<', tok.LT, '<'),
             ('<=', tok.LTE, '<='),

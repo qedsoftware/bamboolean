@@ -1,19 +1,33 @@
 # Bamboolean interpreter
 
+[![Build Status](https://travis-ci.org/qedsoftware/bamboolean.svg?branch=master)](https://travis-ci.org/qedsoftware/bamboolean)
+
+Supported from Python >= 3.4
+
 Implementation of Bamboolean - Boolean Logic Language
 
 Bamboolean is a simple language that consumes array of pre-defined variables, and
 returns boolean value if constraints on these variables are met.
 
-Supported from Python >= 3.4
+[Exemplary expressions in the language](./bamboolean/tests/fixtures.py)
 
 ## Features
 
-1. Case in-sensitive variable names and keywords
+- Case in-sensitive variable names and keywords
+- Comparison operators
+- Logic AND / OR
+- Expressions with parentheses
+- Types: Floats, ints and string
 
-    TODO: list features
+##### Operators associativity
 
-    TODO: describe operators associativity and precedence
+All operators are lef-associative
+
+##### Operators precedence (the higher number the higher priority)
+
+1. OR
+2. AND
+3. == | != | < | <= | > | >=
 
 ## Testing
 
