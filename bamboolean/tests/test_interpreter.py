@@ -1,4 +1,5 @@
 import unittest
+from collections import OrderedDict
 
 from bamboolean.factories import interpret
 from . import fixtures
@@ -10,27 +11,31 @@ class InterpreterTestCase(unittest.TestCase):
         self.assertTrue(interpret(text, {'x': 50}))
         self.assertFalse(interpret(text, {'x': 10}))
 
-    def test_interpreter(self):
-        sym_tab = {
-            'x': [100, 90, 43, 42],
-            'y': [False, True, False, False],
-            'z': ['no', 'yes__typo', 'no', 'yes'],
-            'results': [True, False, True, True],
-        }
+    def assertResults(self, expression, sym_tab, results):
         self.assertEqual(
             list(map((lambda args: interpret(
-                fixtures.simple_example,
-                {'x': args[0], 'y': args[1], 'z': args[2]})
-            ), zip(sym_tab['x'], sym_tab['y'], sym_tab['z']))),
-            sym_tab['results'],
+                expression,
+                {symbol: args[i] for i, symbol in enumerate(sym_tab.keys())})
+            ), zip(*tuple(sym_tab.values())))),
+            results,
         )
 
+    def test_interpreter(self):
+        sym_tab = OrderedDict([
+            ('x', [100, 90, 43, 42]),
+            ('y', [False, True, False, False]),
+            ('z', ['no', 'yes__typo', 'no', 'yes']),
+        ])
+        results = [True, False, True, True]
+        self.assertResults(fixtures.simple_example, sym_tab, results)
+
     def test_parentheses(self):
-        sym_tab = {
-            'x': 100,
-            'y': 'yes',
-        }
-        self.assertTrue(interpret(fixtures.parentheses, sym_tab))
+        sym_tab = OrderedDict([
+            ('x', [100, 10, 24, 10, 10]),
+            ('y', ['yes', 'no', 'unknown', 'unknown', 'yes']),
+        ])
+        results = [True, True, True, False, False]
+        self.assertResults(fixtures.parentheses, sym_tab, results)
 
     def test_operators_precedence(self):
         sym_tab = {
