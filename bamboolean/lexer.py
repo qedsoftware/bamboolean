@@ -33,14 +33,16 @@ RESERVED_KEYWORDS = {
 
 class Lexer:
     def __init__(self, text):
+        assert isinstance(text, str)
         self.text = text
         self.position = 0
         self.current_char = self.text[self.position]
 
     def error(self):
         raise BambooleanLexerError(
-            """Error tokenizing input on character: {} and position: {}
-            """.format(self.current_char, self.position)
+            ("Error tokenizing input on character: "
+             "{} and position: {}.\nExpr: {}".format(
+                 self.current_char, self.position, self.text))
         )
 
     def _is_eof(self, pos):

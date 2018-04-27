@@ -50,6 +50,14 @@ class ParserTestCase(unittest.TestCase):
             ],
         ])
 
+    def test_implicit_boolean_cast(self):
+        parser = ParserFactory(fixtures.implicit_boolean_cast)
+        abstract_tree = parser.parse()
+        self.assertEqual(abstract_tree.tree_repr(), [
+            (tok.ID, 'Z'), (tok.OR, 'OR'),
+            [(tok.ID, 'X'), (tok.AND, 'AND'), (tok.ID, 'Y')],
+        ])
+
     def test_parser_raises_on_invalid_ast(self):
         parser = ParserFactory("x >>= f")
         with self.assertRaises(BambooleanParserError):

@@ -1,11 +1,13 @@
 import operator as built_in_op
 
 from . import tokens as tok
+from .ast import AST
 from .node_visitor import NodeVisitor
 
 
 class Interpreter(NodeVisitor):
     def __init__(self, tree, symbol_table):
+        assert isinstance(tree, AST)
         self.tree = tree
         self.symbol_table = {k.upper(): v for k, v in symbol_table.items()}
 
@@ -20,14 +22,15 @@ class Interpreter(NodeVisitor):
         if op_type == tok.AND:
             return self.visit(node.left) and self.visit(node.right)
         elif op_type == tok.OR:
-            return self.visit(node.left) or self.visit(node.right)
+            return bool(self.visit(node.left) or self.visit(node.right))
 
     def visit_Constraint(self, node):
         var_value = self.visit(node.var)
         value = self.visit(node.value)
         return self._handle_rel_op(node.rel_op.type, var_value, value)
 
-    def _handle_rel_op(self, op_type, val1, val2):
+    @staticmethod
+    def _handle_rel_op(op_type, val1, val2):
         mapping = {
             'NE': built_in_op.ne,
             'EQ': built_in_op.eq,

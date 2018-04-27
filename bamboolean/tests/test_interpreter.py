@@ -43,3 +43,12 @@ class InterpreterTestCase(unittest.TestCase):
             'y': 'not eligible',
         }
         self.assertTrue(interpret(fixtures.operators_precedence, sym_tab))
+
+    def test_implicit_boolean_cast(self):
+        sym_tab = OrderedDict([
+            ('x', [42, 0, 44.4, 0]),
+            ('y', ['string', '', '', 'unknown']),
+            ('z', [0, False, True, 444]),
+        ])
+        results = [True, False, True, True]
+        self.assertResults(fixtures.implicit_boolean_cast, sym_tab, results)
