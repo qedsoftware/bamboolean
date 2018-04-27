@@ -1,10 +1,12 @@
 from .exceptions import BambooleanParserError
+from .lexer import Lexer
 from . import ast
 from . import tokens as tok
 
 
 class Parser:
     def __init__(self, lexer):
+        assert isinstance(lexer, Lexer)
         self.lexer = lexer
         self.current_token = self.lexer.get_next_token()
 
@@ -16,10 +18,12 @@ class Parser:
 
     def error(self, extra=''):
         raise BambooleanParserError(
-            'Invalid syntax on: token {type}, val {val}. {extra}'.format(
-                type=self.current_token.type,
-                val=self.current_token.value,
-                extra=extra))
+            ('Invalid syntax on: token {type}, val {val}. '
+             '{extra}.\nExpression: {expr}'
+             ).format(type=self.current_token.type,
+                      val=self.current_token.value,
+                      extra=extra,
+                      expr=self.lexer.text))
 
     def consume(self, token_type):
         """
@@ -63,17 +67,18 @@ class Parser:
             node = self.expr()
             self.consume(tok.RPAREN)
             return node
-        else:
-            return self.constraint()
+        return self.constraint()
 
     def constraint(self):
         """
-        constraint : variable relational_operator value
+        constraint : variable (relational_operator value)?
         """
         var = self.variable()
-        rel_op = self.relational_op()
-        val = self.value()
-        return ast.Constraint(var, rel_op, val)
+        if tok.is_rel_op(self.current_token.type):
+            rel_op = self.relational_op()
+            val = self.value()
+            return ast.Constraint(var, rel_op, val)
+        return var
 
     def variable(self):
         """
@@ -88,11 +93,10 @@ class Parser:
         relational_operator : ( EQ | NE | LT | LTE | GT | GTE )
         """
         token = self.current_token
-        if token.type in (tok.EQ, tok.NE, tok.LT, tok.LTE, tok.GT, tok.GTE):
+        if tok.is_rel_op(token.type):
             self.consume(token.type)
             return token
-        else:
-            self.error("Invalid relational operator")
+        self.error("Invalid relational operator")
 
     def value(self):
         """

@@ -14,14 +14,16 @@ returns boolean value if constraints on these variables are met.
 ## Features
 
 - Case in-sensitive variable names and keywords
-- Comparison operators
+- Comparison operators (listed below)
 - Logic AND / OR
 - Expressions with parentheses
-- Types: Floats, ints and string
+- Types: Float, Int, String, Bool, Variable
+- [Truth value testing same as in Python](https://docs.python.org/3/library/stdtypes.html#truth-value-testing)
+- Implicit cast of variables to boolean when no relational operator is specified
 
 ##### Operators associativity
 
-All operators are lef-associative
+All operators are left-associative
 
 ##### Operators precedence (the higher number the higher priority)
 
@@ -35,7 +37,7 @@ Run tests:
 
     `python run_tests.py`
 
-## BNF Grammar
+## EBNF Grammar
 
 ```
 expr : simple_expr (OR simple_expr)*
@@ -45,7 +47,7 @@ simple_expr : term (AND term)*
 term : constraint
      | LPAREN expr RPAREN
 
-constraint : variable relational_operator value
+constraint : variable (relational_operator value)?
 
 value : INTEGER
       | FLOAT
