@@ -11,7 +11,7 @@ class Parser:
         self.current_token = self.lexer.get_next_token()
 
     def parse(self):
-        node = self.expr()
+        node = self.compound_expr()
         if self.current_token.type != tok.EOF:
             self.error("EOF while parsing given text")
         return node
@@ -34,6 +34,15 @@ class Parser:
             self.current_token = self.lexer.get_next_token()
         else:
             self.error("Expected: {}".format(token_type))
+
+    def compound_expr(self):
+        """
+        compound_expr : expr
+                      | empty
+        """
+        if self.current_token.type == tok.EOF:
+            return self.empty()
+        return self.expr()
 
     def expr(self):
         """
@@ -119,3 +128,6 @@ class Parser:
         else:
             self.consume(token.type)
             return ast_class(token)
+
+    def empty(self):
+        return ast.NoOp()

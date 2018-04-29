@@ -40,6 +40,9 @@ Run tests:
 ## EBNF Grammar
 
 ```
+compound_expr : expr
+              | empty
+
 expr : simple_expr (OR simple_expr)*
 
 simple_expr : term (AND term)*
@@ -49,12 +52,15 @@ term : constraint
 
 constraint : variable (relational_operator value)?
 
+relational_operator : ( EQ | NE | LT | LTE | GT | GTE )
+
 value : INTEGER
       | FLOAT
       | STRING
       | BOOL
 
-variable: ID
+variable : ID
 
-relational_operator : ( EQ | NE | LT | LTE | GT | GTE )
+empty :
+
 ```

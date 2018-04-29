@@ -54,3 +54,6 @@ class Interpreter(NodeVisitor):
 
     def visit_String(self, node):
         return node.value
+
+    def visit_NoOp(self, node):
+        return True  # no expression should evaluate to true

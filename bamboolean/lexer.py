@@ -36,7 +36,7 @@ class Lexer:
         assert isinstance(text, str)
         self.text = text
         self.position = 0
-        self.current_char = self.text[self.position]
+        self.current_char = self.text[self.position] if self.text else None
 
     def error(self):
         raise BambooleanLexerError(

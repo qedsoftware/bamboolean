@@ -52,3 +52,6 @@ class InterpreterTestCase(unittest.TestCase):
         ])
         results = [True, False, True, True]
         self.assertResults(fixtures.implicit_boolean_cast, sym_tab, results)
+
+    def test_empty_expr_evaluates_to_true(self):
+        self.assertTrue(interpret('', {}))

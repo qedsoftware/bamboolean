@@ -9,6 +9,7 @@ from .fixtures import simple_example
 class LexerTestCase(unittest.TestCase):
     def test_tokens(self):
         records = (
+            ('', tok.EOF, None),
             ('42', tok.INTEGER, 42),
             ('3.14', tok.FLOAT, 3.14),
             ('true', tok.BOOL, True),
