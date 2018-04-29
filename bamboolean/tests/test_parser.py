@@ -58,6 +58,14 @@ class ParserTestCase(unittest.TestCase):
             [(tok.ID, 'X'), (tok.AND, 'AND'), (tok.ID, 'Y')],
         ])
 
+    def test_constant_statements(self):
+        parser = ParserFactory(fixtures.constant_statements)
+        abstract_tree = parser.parse()
+        self.assertEqual(abstract_tree.tree_repr(), [
+            [(tok.INTEGER, 444), (tok.AND, 'AND'), (tok.BOOL, True)],
+            (tok.OR, 'OR'), (tok.STRING, 'yes'),
+        ])
+
     def test_parser_raises_on_invalid_ast(self):
         parser = ParserFactory("x >>= f")
         with self.assertRaises(BambooleanParserError):

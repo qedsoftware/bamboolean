@@ -68,7 +68,7 @@ class Parser:
 
     def term(self):
         """
-        term : constraint
+        term : statement
              | LPAREN expr RPAREN
         """
         if self.current_token.type == tok.LPAREN:
@@ -76,6 +76,15 @@ class Parser:
             node = self.expr()
             self.consume(tok.RPAREN)
             return node
+        return self.statement()
+
+    def statement(self):
+        """
+        statement : value
+                  | constraint
+        """
+        if tok.is_value(self.current_token.type):
+            return self.value()
         return self.constraint()
 
     def constraint(self):
