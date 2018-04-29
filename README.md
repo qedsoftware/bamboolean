@@ -47,8 +47,11 @@ expr : simple_expr (OR simple_expr)*
 
 simple_expr : term (AND term)*
 
-term : constraint
+term : statement
      | LPAREN expr RPAREN
+
+statement : value
+          | constraint
 
 constraint : variable (relational_operator value)?
 

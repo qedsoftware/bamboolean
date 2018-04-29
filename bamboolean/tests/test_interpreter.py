@@ -55,3 +55,26 @@ class InterpreterTestCase(unittest.TestCase):
 
     def test_empty_expr_evaluates_to_true(self):
         self.assertTrue(interpret('', {}))
+
+    def test_variable_evaluates_to_its_truthness(self):
+        self.assertTrue(interpret('x', {'x': True}))
+        self.assertTrue(interpret('x', {'x': 'false'}))
+        self.assertTrue(interpret('x', {'x': 42}))
+
+        self.assertFalse(interpret('x', {'x': ''}))
+        self.assertFalse(interpret('x', {'x': False}))
+        self.assertFalse(interpret('x', {'x': 0}))
+
+    def test_constant_evaluates_to_its_truthness(self):
+        self.assertTrue(interpret('"string"', {}))
+        self.assertTrue(interpret('True', {}))
+        self.assertTrue(interpret('42', {}))
+
+        self.assertFalse(interpret('0', {}))
+        self.assertFalse(interpret('""', {}))
+        self.assertFalse(interpret('False', {}))
+
+    def test_complex_constant_statement(self):
+        false_const_statement = "42 AND False OR ''"
+        self.assertTrue(interpret(fixtures.constant_statements, {}))
+        self.assertFalse(interpret(false_const_statement, {}))
