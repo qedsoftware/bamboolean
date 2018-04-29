@@ -62,3 +62,8 @@ class ParserTestCase(unittest.TestCase):
         parser = ParserFactory("x >>= f")
         with self.assertRaises(BambooleanParserError):
             parser.parse()
+
+    def test_empty_expression(self):
+        parser = ParserFactory('')
+        abstract_tree = parser.parse()
+        self.assertEqual(['noop'], abstract_tree.tree_repr())

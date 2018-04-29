@@ -62,3 +62,8 @@ class Bool(TokenBasedAST):
 
 class String(TokenBasedAST):
     pass
+
+
+class NoOp(AST):
+    def tree_repr(self):
+        return ['noop']
