@@ -14,9 +14,9 @@ NE, EQ, LT, LTE, GT, GTE = ('NE', 'EQ', 'LT', 'LTE', 'GT', 'GTE')
 EOF = 'EOF'
 
 
-def is_rel_op(op):
+def is_rel_op(op: str) -> bool:
     return op in (NE, EQ, LT, LTE, GT, GTE)
 
 
-def is_value(tok_type):
+def is_value(tok_type: str) -> bool:
     return tok_type in (STRING, BOOL, INTEGER, FLOAT)

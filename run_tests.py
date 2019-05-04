@@ -1,3 +1,4 @@
+#!/bin/python3
 import os
 import subprocess
 import sys
@@ -15,6 +16,11 @@ def do_call(args):
         sys.exit(1)
 
 
+def run_mypy():
+    print('Run mypy')
+    do_call(['mypy', '.'])
+
+
 def run_flake8():
     print('Run flake8')
     do_call(['flake8', '.'])
@@ -30,6 +36,7 @@ def run_python_tests():
 
 def main():
     run_flake8()
+    run_mypy()
     run_python_tests()
 
 

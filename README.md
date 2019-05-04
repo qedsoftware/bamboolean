@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/qedsoftware/bamboolean.svg?branch=master)](https://travis-ci.org/qedsoftware/bamboolean)
 
-Supported from Python >= 3.4
+Supported from Python >= 3.6
 
 Implementation of Bamboolean - Boolean Logic Language
 
