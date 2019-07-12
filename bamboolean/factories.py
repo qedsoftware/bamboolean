@@ -1,22 +1,23 @@
+from .ast import AST
 from .lexer import Lexer
 from .parser import Parser
 from .interpreter import Interpreter
 
 
-def ParserFactory(text):
+def ParserFactory(text: str) -> Parser:
     lexer = Lexer(text)
     return Parser(lexer)
 
 
-def InterpreterFactory(text, symbol_table):
+def InterpreterFactory(text: str, symbol_table: dict) -> Interpreter:
     parser = ParserFactory(text)
     tree = parser.parse()
     return Interpreter(tree, symbol_table)
 
 
-def interpret(text, symbol_table):
+def interpret(text: str, symbol_table: dict) -> bool:
     return InterpreterFactory(text, symbol_table).interpret()
 
 
-def parse(text):
+def parse(text: str) -> AST:
     return ParserFactory(text).parse()

@@ -10,5 +10,9 @@ class BambooleanParserError(BambooleanError):
     pass
 
 
+class BambooleanRuntimeError(BambooleanError):
+    pass
+
+
 class NoSuchVisitorException(BambooleanError):
     pass

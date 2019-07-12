@@ -8,3 +8,5 @@ build
 *.whl
 
 .idea/
+.mypy_cache/
+.pytype/
