@@ -15,6 +15,7 @@ setup(
     version=VERSION,
     description='Interpreter of Boolean Logic Language',
     long_description=long_description,
+    long_description_content_type='text/markdown',
     url='https://github.com/qedsoftware/bamboolean',
     author='Quantitative Engineering Design Inc.',
     author_email='info@qed.ai',
