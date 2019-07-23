@@ -1,7 +1,9 @@
+from typing import Set
 from .ast import AST
 from .lexer import Lexer
 from .parser import Parser
 from .interpreter import Interpreter
+from .walkers import VarsExtractor
 
 
 def ParserFactory(text: str) -> Parser:
@@ -21,3 +23,7 @@ def interpret(text: str, symbol_table: dict) -> bool:
 
 def parse(text: str) -> AST:
     return ParserFactory(text).parse()
+
+
+def extract_vars(text: str) -> Set[str]:
+    return VarsExtractor(parse(text)).extract()

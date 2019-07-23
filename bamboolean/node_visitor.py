@@ -1,4 +1,4 @@
-from typing import NoReturn, Any
+from typing import Any
 from .exceptions import NoSuchVisitorException
 
 
@@ -16,6 +16,6 @@ class NodeVisitor:
         visitor = getattr(self, method_name, self.generic_visit)
         return visitor(node)
 
-    def generic_visit(self, node) -> NoReturn:
+    def generic_visit(self, node) -> Any:
         raise NoSuchVisitorException(
             'No visit_{} method'.format(type(node).__name__))
