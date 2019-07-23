@@ -2,6 +2,7 @@ from .ast import AST
 from .lexer import Lexer
 from .parser import Parser
 from .interpreter import Interpreter
+from .walkers import VarsExtractor
 
 
 def ParserFactory(text: str) -> Parser:
@@ -21,3 +22,7 @@ def interpret(text: str, symbol_table: dict) -> bool:
 
 def parse(text: str) -> AST:
     return ParserFactory(text).parse()
+
+
+def extract(text: str):
+    return VarsExtractor(parse(text)).extract()
