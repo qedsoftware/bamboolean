@@ -21,5 +21,5 @@ class VarsExtractor(NodeVisitor):
     def visit_Var(self, node: TokenBasedAST) -> Set[str]:
         return {str(node.value)}
 
-    def generic_visit(self, node: TokenBasedAST):
+    def generic_visit(self, node: TokenBasedAST) -> Set[str]:
         return set()

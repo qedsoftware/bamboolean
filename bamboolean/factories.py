@@ -1,3 +1,4 @@
+from typing import Set
 from .ast import AST
 from .lexer import Lexer
 from .parser import Parser
@@ -24,5 +25,5 @@ def parse(text: str) -> AST:
     return ParserFactory(text).parse()
 
 
-def extract(text: str):
+def extract_vars(text: str) -> Set[str]:
     return VarsExtractor(parse(text)).extract()
