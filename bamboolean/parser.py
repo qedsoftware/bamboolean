@@ -69,10 +69,10 @@ class Parser:
 
         return node
 
-    def _parse_un_op(self, node_func: ParseNodeT) -> ast.AST:
+    def _parse_unary_op(self, node_func: ParseNodeT) -> ast.AST:
         token = self.current_token
         self.consume(token.type)
-        return ast.UnOp(op=token, right=node_func())
+        return ast.UnaryOp(op=token, right=node_func())
 
     def term(self) -> ast.AST:
         """
@@ -85,8 +85,8 @@ class Parser:
             node = self.expr()
             self.consume(tok.RPAREN)
             return node
-        if tok.is_un_op(self.current_token.type):
-            return self._parse_un_op(self.term)
+        if tok.is_unary_op(self.current_token.type):
+            return self._parse_unary_op(self.term)
         return self.statement()
 
     def statement(self) -> Union[ast.ASTValueType, ast.Var, ast.Constraint]:

@@ -70,7 +70,7 @@ class BinOp(AST):
         ]
 
 
-class UnOp(AST):
+class UnaryOp(AST):
     def __init__(self, op: Token, right: AST) -> None:
         self.op = op
         self.right = right

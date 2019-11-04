@@ -14,7 +14,7 @@ NE, EQ, LT, LTE, GT, GTE = ('NE', 'EQ', 'LT', 'LTE', 'GT', 'GTE')
 EOF = 'EOF'
 
 
-def is_un_op(op: str) -> bool:
+def is_unary_op(op: str) -> bool:
     return op in (NOT,)
 
 
