@@ -15,7 +15,7 @@ returns boolean value if constraints on these variables are met.
 
 - Case in-sensitive variable names and keywords
 - Comparison operators (listed below)
-- Logic AND / OR
+- Logic AND / OR / NOT
 - Expressions with parentheses
 - Types: Float, Int, String, Bool, Variable
 - [Truth value testing same as in Python](https://docs.python.org/3/library/stdtypes.html#truth-value-testing)
@@ -29,6 +29,7 @@ All operators are left-associative
 
 1. OR
 2. AND
+4. NOT
 3. == | != | < | <= | > | >=
 
 ## Testing
@@ -49,6 +50,7 @@ simple_expr : term (AND term)*
 
 term : statement
      | LPAREN expr RPAREN
+     | NOT term
 
 statement : value
           | constraint

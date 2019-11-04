@@ -31,6 +31,13 @@ class Interpreter(NodeVisitor):
         else:
             self.error("Could not evaluate binary operator")
 
+    def visit_UnOp(self, node) -> bool:
+        op_type = node.op.type
+        if op_type == tok.NOT:
+            return not self.visit(node.right)
+        else:
+            self.error("Could not evaluate unary operator")
+
     def visit_Constraint(self, node) -> bool:
         var_value = self.visit(node.var)
         value = self.visit(node.value)

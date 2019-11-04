@@ -75,3 +75,17 @@ class ParserTestCase(unittest.TestCase):
         parser = ParserFactory('')
         abstract_tree = parser.parse()
         self.assertEqual(['noop'], abstract_tree.tree_repr())
+
+    def test_not(self):
+        parser = ParserFactory('not x')
+        abstract_tree = parser.parse()
+        self.assertEqual(abstract_tree.tree_repr(), [
+            (tok.NOT, 'NOT'), (tok.ID, 'X')
+        ])
+
+    def test_not_nested(self):
+        parser = ParserFactory('not not x')
+        abstract_tree = parser.parse()
+        self.assertEqual(abstract_tree.tree_repr(), [
+            (tok.NOT, 'NOT'), [(tok.NOT, 'NOT'), (tok.ID, 'X')]
+        ])

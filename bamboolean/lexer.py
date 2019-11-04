@@ -30,6 +30,7 @@ class Token:
 RESERVED_KEYWORDS: Dict[str, Token] = {
     'AND': Token(tok.AND, 'AND'),
     'OR': Token(tok.OR, 'OR'),
+    'NOT': Token(tok.NOT, 'NOT'),
     'TRUE': Token(tok.BOOL, True),
     'FALSE': Token(tok.BOOL, False),
 }
