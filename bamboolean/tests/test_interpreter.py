@@ -78,3 +78,14 @@ class InterpreterTestCase(unittest.TestCase):
         false_const_statement = "42 AND False OR ''"
         self.assertTrue(interpret(fixtures.constant_statements, {}))
         self.assertFalse(interpret(false_const_statement, {}))
+
+    def test_not(self):
+        self.assertTrue(interpret('not x', {'x': False}))
+        self.assertFalse(interpret('not x', {'x': True}))
+
+        # operator precedence
+        self.assertFalse(interpret('not True and False', {}))
+        self.assertTrue(interpret('not (True and False)', {}))
+
+    def test_multi_not(self):
+        self.assertTrue(interpret('not not x', {'x': True}))

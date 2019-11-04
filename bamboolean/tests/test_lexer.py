@@ -16,6 +16,7 @@ class LexerTestCase(unittest.TestCase):
             ('false', tok.BOOL, False),
             ('AND', tok.AND, 'AND'),
             ('OR', tok.OR, 'OR'),
+            ('NOT', tok.NOT, 'NOT'),
             ('(', tok.LPAREN, '('),
             (')', tok.RPAREN, ')'),
             ('var', tok.ID, 'VAR'),

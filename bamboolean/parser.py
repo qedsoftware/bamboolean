@@ -5,6 +5,9 @@ from . import ast
 from . import tokens as tok
 
 
+ParseNodeT = Callable[[], ast.AST]
+
+
 class Parser:
     def __init__(self, lexer: Lexer) -> None:
         self.lexer = lexer
@@ -56,8 +59,7 @@ class Parser:
         """
         return self._parse_bin_op(self.term, tok.AND)
 
-    def _parse_bin_op(
-            self, node_func: Callable[[], ast.AST], token_type) -> ast.AST:
+    def _parse_bin_op(self, node_func: ParseNodeT, token_type) -> ast.AST:
         node = node_func()
 
         while self.current_token.type == token_type:
@@ -67,16 +69,24 @@ class Parser:
 
         return node
 
+    def _parse_unary_op(self, node_func: ParseNodeT) -> ast.AST:
+        token = self.current_token
+        self.consume(token.type)
+        return ast.UnaryOp(op=token, right=node_func())
+
     def term(self) -> ast.AST:
         """
         term : statement
              | LPAREN expr RPAREN
+             | NOT term
         """
         if self.current_token.type == tok.LPAREN:
             self.consume(tok.LPAREN)
             node = self.expr()
             self.consume(tok.RPAREN)
             return node
+        if tok.is_unary_op(self.current_token.type):
+            return self._parse_unary_op(self.term)
         return self.statement()
 
     def statement(self) -> Union[ast.ASTValueType, ast.Var, ast.Constraint]:
