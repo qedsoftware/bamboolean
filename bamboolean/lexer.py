@@ -20,6 +20,9 @@ class Token:
             type=self.type,
             value=repr(self.value))
 
+    def stringify(self):
+        return str(self.value).lower()
+
     def __repr__(self) -> str:
         return self.__str__()
 

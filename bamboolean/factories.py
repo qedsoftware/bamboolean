@@ -3,7 +3,7 @@ from .ast import AST
 from .lexer import Lexer
 from .parser import Parser
 from .interpreter import Interpreter
-from .walkers import VarsExtractor
+from .walkers import VarsExtractor, NormalizeExpr
 
 
 def ParserFactory(text: str) -> Parser:
@@ -27,3 +27,7 @@ def parse(text: str) -> AST:
 
 def extract_vars(text: str) -> Set[str]:
     return VarsExtractor(parse(text)).extract()
+
+
+def normalize(text: str) -> str:
+    return NormalizeExpr(parse(text)).normalize().stringify()

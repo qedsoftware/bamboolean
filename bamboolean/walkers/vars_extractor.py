@@ -1,6 +1,6 @@
 from typing import Set
-from .node_visitor import NodeVisitor
-from .ast import AST, TokenBasedAST
+from bamboolean.node_visitor import NodeVisitor
+from bamboolean.ast import AST, TokenBasedAST
 
 
 class VarsExtractor(NodeVisitor):
