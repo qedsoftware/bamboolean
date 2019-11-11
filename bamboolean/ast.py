@@ -13,7 +13,7 @@ class AST:
     def __repr__(self) -> str:
         return self.__str__()
 
-    def stringify(self):
+    def stringify(self) -> str:
         raise NotImplementedError
 
 
