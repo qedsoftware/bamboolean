@@ -25,6 +25,9 @@ class NormalizeExpr(unittest.TestCase):
         self.assertEqual(normalize('not (x and not y)'), '(not x or y)')
         self.assertEqual(normalize('x or not not y'), '(x or y)')
 
+    def test_normalize_empty(self):
+        self.assertEqual(normalize(''), '')
+
     def test_normalize_bool(self):
         self.assertEqual(normalize('not false'), 'true')
 

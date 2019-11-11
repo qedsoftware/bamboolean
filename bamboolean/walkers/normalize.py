@@ -29,8 +29,6 @@ class NegateExpr(NodeVisitor):
 
     def demorgan(self) -> AST:
         """Negate expression just as De Morgan would do it."""
-        if not self.tree:
-            return self.tree
         return self.visit(self.tree)
 
     def visit_Constraint(self, node: Constraint) -> Constraint:
@@ -65,8 +63,6 @@ class NormalizeExpr(NodeVisitor):
 
     def normalize(self) -> AST:
         """Convert the expression to the normal form"""
-        if not self.tree:
-            return self.tree
         return self.visit(self.tree)
 
     def visit_UnaryOp(self, node: UnaryOp) -> AST:
