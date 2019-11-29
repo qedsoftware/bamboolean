@@ -3,7 +3,7 @@ from bamboolean.ast import AST, Constraint, BinOp, UnaryOp, Bool
 from bamboolean import tokens as tok
 
 
-class NegateExpr(NodeVisitor):
+class ExprNegator(NodeVisitor):
     def __init__(self, tree: AST) -> None:
         self.tree = tree
 
@@ -21,7 +21,7 @@ class NegateExpr(NodeVisitor):
 
     def visit_UnaryOp(self, node: UnaryOp) -> AST:
         if node.op.type == tok.NOT:
-            return NormalizeExpr(node.right).normalize()
+            return ExprNormalizer(node.right).normalize()
         return node
 
     def visit_Var(self, node: AST) -> UnaryOp:
@@ -35,7 +35,7 @@ class NegateExpr(NodeVisitor):
         return node
 
 
-class NormalizeExpr(NodeVisitor):
+class ExprNormalizer(NodeVisitor):
     def __init__(self, tree: AST) -> None:
         self.tree = tree
 
@@ -45,7 +45,7 @@ class NormalizeExpr(NodeVisitor):
 
     def visit_UnaryOp(self, node: UnaryOp) -> AST:
         if node.op.type == tok.NOT:
-            return NegateExpr(node.right).demorgan()
+            return ExprNegator(node.right).demorgan()
         return node
 
     def visit_BinOp(self, node: BinOp) -> AST:
