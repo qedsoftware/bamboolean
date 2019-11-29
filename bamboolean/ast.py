@@ -1,5 +1,5 @@
 from typing import List, Any, Union
-from .lexer import Token
+from .tokens import Token
 
 
 class AST:

@@ -1,6 +1,6 @@
 from typing import NoReturn, Dict, Type, Union, Callable
 from .exceptions import BambooleanParserError
-from .lexer import Lexer, Token
+from .lexer import Lexer
 from . import ast
 from . import tokens as tok
 
@@ -117,7 +117,7 @@ class Parser:
         self.consume(tok.ID)
         return node
 
-    def relational_op(self) -> Token:
+    def relational_op(self) -> tok.Token:
         """
         relational_operator : ( EQ | NE | LT | LTE | GT | GTE )
         """
