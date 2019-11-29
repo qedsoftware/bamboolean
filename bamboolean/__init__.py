@@ -1,3 +1,3 @@
 from .factories import ParserFactory as Parser   # noqa
 from .factories import InterpreterFactory as Interpreter   # noqa
-from .factories import interpret, parse, extract_vars # noqa
+from .factories import interpret, parse, extract_vars, normalize  # noqa

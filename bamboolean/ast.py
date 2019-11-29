@@ -1,5 +1,5 @@
 from typing import List, Any, Union
-from .lexer import Token
+from .tokens import Token
 
 
 class AST:
@@ -13,6 +13,9 @@ class AST:
     def __repr__(self) -> str:
         return self.__str__()
 
+    def stringify(self) -> str:
+        raise NotImplementedError
+
 
 class TokenBasedAST(AST):
     def __init__(self, token: Token) -> None:
@@ -21,6 +24,9 @@ class TokenBasedAST(AST):
 
     def tree_repr(self):
         return self.token.tree_repr()
+
+    def stringify(self) -> str:
+        return self.token.stringify()
 
 
 class Var(TokenBasedAST):
@@ -36,7 +42,8 @@ class Bool(TokenBasedAST):
 
 
 class String(TokenBasedAST):
-    pass
+    def stringify(self) -> str:
+        return f"'{self.value}'"
 
 
 ASTValueType = Union[String, Bool, Num]
@@ -55,6 +62,10 @@ class Constraint(AST):
             self.value.tree_repr(),
         ]
 
+    def stringify(self) -> str:
+        op = self.rel_op.stringify()
+        return f"{self.var.stringify()} {op} {self.value.stringify()}"
+
 
 class BinOp(AST):
     def __init__(self, left: AST, op: Token, right: AST) -> None:
@@ -69,6 +80,10 @@ class BinOp(AST):
             self.right.tree_repr(),
         ]
 
+    def stringify(self) -> str:
+        left, right = self.left.stringify(), self.right.stringify()
+        return f"({left} {self.op.stringify()} {right})"
+
 
 class UnaryOp(AST):
     def __init__(self, op: Token, right: AST) -> None:
@@ -81,7 +96,13 @@ class UnaryOp(AST):
             self.right.tree_repr(),
         ]
 
+    def stringify(self) -> str:
+        return f"{self.op.stringify()} {self.right.stringify()}"
+
 
 class NoOp(AST):
     def tree_repr(self) -> List[Any]:
         return ['noop']
+
+    def stringify(self) -> str:
+        return ""
